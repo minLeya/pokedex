@@ -17,16 +17,18 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
         className="w-32 h-32 object-contain"
       />
 
-      <div className="text-lg font-bold capitalize text-center">{pokemon.name}</div>
+      <div className="text-lg font-bold capitalize text-center">
+        {pokemon.name}
+      </div>
 
       <div className="flex gap-2">
         {pokemon.types.map((type) => (
           <span
             key={type}
-            className="bg-blue-400 text-shadow-white px-3 pb-1 rounded-full text-sm"
+            className="bg-blue-400 text-shadow-white p-1 px-3 rounded-full text-sm"
           >
-			{type}
-		  </span>
+            {type}
+          </span>
         ))}
       </div>
     </div>
