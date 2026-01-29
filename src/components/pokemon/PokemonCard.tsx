@@ -6,7 +6,7 @@ interface PokemonCardProps {
 
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
-    <div className="bg-white rounded-3xl border border-black flex flex-col justify-center items-center gap-4 p-3 hover:shadow-xl transition-shadow cursor-pointer">
+    <div className="bg-white rounded-3xl border border-black flex flex-col justify-center items-center gap-4 p-3 hover:shadow-2xl transition-shadow cursor-pointer">
       <div className="text-gray-500 text-sm">
         #{pokemon.id.toString().padStart(3, "0")}
       </div>
