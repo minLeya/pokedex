@@ -1,4 +1,5 @@
 import { type Pokemon } from "../../types";
+import { getTypeStyle } from "../../utils/typeColors";
 
 interface PokemonCardProps {
   pokemon: Pokemon;
@@ -22,14 +23,17 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
       </div>
 
       <div className="flex gap-2">
-        {pokemon.types.map((type) => (
-          <span
-            key={type}
-            className="bg-blue-400 text-shadow-white p-1 px-3 rounded-full text-sm"
-          >
-            {type}
-          </span>
-        ))}
+        {pokemon.types.map((type) => {
+          const style = getTypeStyle(type);
+          return (
+            <span
+              key={type}
+              className={`${style.bg} ${style.text} p-1 px-3 rounded-full text-sm`}
+            >
+              {type}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
