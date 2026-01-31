@@ -7,7 +7,7 @@ import { type Pokemon } from "../../types";
 export const PokemonGrid = () => {
   const [offset, setOffset] = useState(1);
   const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
-  const limit = 15;
+  const limit = 10;
 
   const { pokemons: currentPokemons, loading, error } = usePokemon(limit, (offset - 1) * limit);
 
