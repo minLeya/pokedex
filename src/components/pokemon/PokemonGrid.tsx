@@ -1,27 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PokemonCard } from "./PokemonCard";
-import { LoadMoreButton } from "../ui/LoadMoreButton";
 import { usePokemon } from "../../hooks/usePokemon";
-import { type Pokemon } from "../../types";
 
 export const PokemonGrid = () => {
-  const [offset, setOffset] = useState(1);
-  const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
-  const limit = 10;
+  const [page, setPage] = useState(1);
+  const limit = 15;
 
-  const { pokemons: currentPokemons, loading, error } = usePokemon(limit, (offset - 1) * limit);
+  const { pokemons, loading, error } = usePokemon(limit, (page - 1) * limit);
 
-  useEffect(() => {
-    if(currentPokemons.length > 0) {
-      setAllPokemons(prev => [...prev, ...currentPokemons]);
+  const handlePrevious = () => {
+    if (page > 1) {
+      setPage(prev => prev - 1);
     }
-  }, [currentPokemons]);
-
-  const handleLoadMore = () => {
-    setOffset((prev) => prev + 1);
   };
 
-  if (loading && allPokemons.length === 0) {
+  const handleNext = () => {
+    setPage(prev => prev + 1);
+  };
+
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="text-xl">Loading Pokémon...</div>
@@ -33,7 +30,7 @@ export const PokemonGrid = () => {
     <div className="text-center py-12">
       <div className="text-red-500 text-xl mb-4">Error: {error}</div>
       <button
-        onClick={() => setOffset(1)}
+        onClick={() => setPage(1)}
         className="px-6 py-2 bg-red-500 text-white rounded-lg"
       >
         Try Again
@@ -42,18 +39,35 @@ export const PokemonGrid = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-14">
-        {allPokemons.map((pokemon) => (
+        {pokemons.map((pokemon) => (
           <PokemonCard key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>
+      
 
-      <div className="flex justify-center mb-8">
-        <LoadMoreButton
-          onClick={handleLoadMore}
-          isLoading={loading && offset > 1}
-        />
+      <div className="flex justify-center items-center gap-6 mb-8 p-4">
+        <button
+          onClick={handlePrevious}
+          disabled={page === 1}
+          className="px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          ←
+        </button>
+        
+        <div className="flex items-center gap-4">
+          <span className="text-lg font-medium text-gray-700">
+            Page {page}
+          </span>
+        </div>
+        
+        <button
+          onClick={handleNext}
+          className="px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+        >
+          →
+        </button>
       </div>
     </div>
   );
