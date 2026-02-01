@@ -1,18 +1,47 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { usePokemonDetail } from "../hooks/usePokemonDetail";
+import { PokemonDetail } from "../components/pokemon/PokemonDetail";
 
 export const PokemonDetailPage = () => {
   const { id } = useParams();
   const { pokemon, loading, error } = usePokemonDetail(Number(id));
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!pokemon) return <div>Pokemon not found</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Loading...
+      </div>
+    );
+  }
 
-  return(
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (!pokemon) {
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Pokemon not found :(
+      </div>
+    );
+  }
+
+  return (
     <div>
-      <h1>{pokemon.name}</h1>
-      <img src="{pokemon.image}" alt="{pokemon.name}" />
+      <div className="mt-6 ml-6">
+        <Link
+          to="/"
+          className="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-full text-white "
+        >
+          Back to Pokédex
+        </Link>
+      </div>
+
+      <PokemonDetail pokemon={pokemon} />
     </div>
-  )
+  );
 };

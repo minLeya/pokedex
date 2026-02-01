@@ -12,10 +12,21 @@ export const usePokemonDetail = (id: number) => {
     const fetchPokemonDetail = async () => {
       try {
         setLoading(true);
-        // 1. fetch
+        // 1. fetch main data
         const response = await fetch(`${POKEAPI_URL}/pokemon/${id}`);
-        // 2. get data
+        // 2. get main data
         const data = await response.json();
+
+        // 1.1 fetch description
+        const speciesResponse = await fetch(`${POKEAPI_URL}/pokemon-species/${id}`);
+        // 2.2 get description
+        const speciesData = await speciesResponse.json();
+
+        const englishEntry = speciesData.flavor_text_entries.find(
+          (entry: any) => entry.language.name === "en"
+        );
+        const description = englishEntry?.flavor_text || "No description available";
+
         // 3. convert to pokemon detail
         const pokemonDetail = {
           id: data.id,
@@ -24,7 +35,7 @@ export const usePokemonDetail = (id: number) => {
           types: data.types.map((typeInfo: any) => typeInfo.type.name),
           height: data.height,
           weight: data.weight,
-          description: "",
+          description: description.replace(/\n/g, ' '),
           stats: {
             hp: data.stats[0].base_stat,
             attack: data.stats[1].base_stat,
