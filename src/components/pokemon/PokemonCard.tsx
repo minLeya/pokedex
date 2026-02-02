@@ -11,7 +11,7 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     <Link to={`/pokemon/${pokemon.id}`}>
       <div className="bg-white rounded-3xl border border-black flex flex-col justify-center items-center gap-4 p-3 hover:shadow-2xl transition-shadow cursor-pointer">
         <div className="text-gray-500 text-sm">
-          #{pokemon.id.toString().padStart(3, "0")}
+          #{pokemon.id.toString().padStart(4, "0")}
         </div>
 
         <img

@@ -13,7 +13,7 @@ export const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
       <div className="flex flex-col uppercase text-center mb-4">
         <div className="text-3xl font-semibold">{pokemon.name}</div>
         <div className="text-gray-400 text-lg">
-          #{pokemon.id.toString().padStart(3, "0")}
+          #{pokemon.id.toString().padStart(4, "0")}
         </div>
       </div>
       <div className="flex justify-center mb-6">
