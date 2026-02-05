@@ -7,19 +7,13 @@ export const useAllPokemons = () => {
   const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     const fetchAllPokemons = async () => {
       try {
         setLoading(true);
 
-        const countResponse = await fetch(`${POKEAPI_URL}/pokemon`);
-        const countData = await countResponse.json();
-        const total = countData.count; 
-        setTotalCount(total);
-
-        const response = await fetch(`${POKEAPI_URL}/pokemon?limit=${total}`);
+        const response = await fetch(`${POKEAPI_URL}/pokemon?limit=1025`);
         const data = await response.json();
 
         const pokemonList = data.results.map((pokemon: any, index: number) => ({
@@ -42,5 +36,5 @@ export const useAllPokemons = () => {
     fetchAllPokemons();
   }, []);
 
-  return { allPokemons, loading, error, totalCount };
+  return { allPokemons, loading, error };
 };
