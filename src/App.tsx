@@ -5,7 +5,7 @@ import { Layout } from "./components/layout/Layout";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/pokedex">
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
