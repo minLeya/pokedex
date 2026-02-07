@@ -3,7 +3,7 @@ import { type Pokemon } from "../types";
 
 const POKEAPI_URL = "https://pokeapi.co/api/v2";
 
-export const useAllPokemons = () => {
+export const usePokemonSearch = () => {
   const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAllPokemons } from "../../hooks/useAllPokemons";
+import { usePokemonSearch } from "../../hooks/usePokemonSearch";
 import { type Pokemon } from "../../types";
 
 export const SearchBar = () => {
@@ -10,7 +10,7 @@ export const SearchBar = () => {
   
   const navigate = useNavigate();
   
-  const { allPokemons: pokemons, loading } = useAllPokemons();
+  const { allPokemons: pokemons, loading } = usePokemonSearch();
 
   useEffect(() => {
     if (!query.trim()) {

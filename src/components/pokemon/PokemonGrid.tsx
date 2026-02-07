@@ -1,25 +1,28 @@
 import { useState } from "react";
 import { PokemonCard } from "./PokemonCard";
-import { usePokemon } from "../../hooks/usePokemon";
+import { usePokemonGrid } from "../../hooks/usePokemonGrid";
 
 interface PokemonGridProps {
   selectedTypes?: string[];
 }
 
-export const PokemonGrid = ({selectedTypes = []} : PokemonGridProps) => {
+export const PokemonGrid = ({ selectedTypes = [] }: PokemonGridProps) => {
   const [page, setPage] = useState(1);
   const limit = 15;
 
-  const { pokemons, loading, error } = usePokemon(limit, (page - 1) * limit);
+  const { pokemons, loading, error } = usePokemonGrid(
+    limit,
+    (page - 1) * limit
+  );
 
   const handlePrevious = () => {
     if (page > 1) {
-      setPage(prev => prev - 1);
+      setPage((prev) => prev - 1);
     }
   };
 
   const handleNext = () => {
-    setPage(prev => prev + 1);
+    setPage((prev) => prev + 1);
   };
 
   if (loading) {
@@ -31,22 +34,25 @@ export const PokemonGrid = ({selectedTypes = []} : PokemonGridProps) => {
   }
 
   if (error) {
-    <div className="text-center py-12">
-      <div className="text-red-500 text-xl mb-4">Error: {error}</div>
-      <button
-        onClick={() => setPage(1)}
-        className="px-6 py-2 bg-red-500 text-white rounded-lg"
-      >
-        Try Again
-      </button>
-    </div>;
+    return (
+      <div className="text-center py-12">
+        <div className="text-red-500 text-xl mb-4">Error: {error}</div>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-6 py-2 bg-red-500 text-white rounded-lg"
+        >
+          Try Again
+        </button>
+      </div>
+    );
   }
 
-  const filteredPokemons = selectedTypes.length > 0 ?
-    pokemons.filter(pokemon => 
-      pokemon.types.some(type => selectedTypes.includes(type))
-    )
-    : pokemons;
+  const filteredPokemons =
+    selectedTypes.length > 0
+      ? pokemons.filter((pokemon) =>
+          pokemon.types.some((type) => selectedTypes.includes(type))
+        )
+      : pokemons;
 
   return (
     <div className="min-h-screen">
@@ -55,7 +61,6 @@ export const PokemonGrid = ({selectedTypes = []} : PokemonGridProps) => {
           <PokemonCard key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>
-      
 
       <div className="flex justify-center items-center gap-6 mb-8 p-4">
         <button
@@ -65,13 +70,11 @@ export const PokemonGrid = ({selectedTypes = []} : PokemonGridProps) => {
         >
           ←
         </button>
-        
+
         <div className="flex items-center gap-4">
-          <span className="text-lg font-medium text-gray-700">
-            Page {page}
-          </span>
+          <span className="text-lg font-medium text-gray-700">Page {page}</span>
         </div>
-        
+
         <button
           onClick={handleNext}
           className="px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
