@@ -20,7 +20,12 @@ export const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
         <img
           src={pokemon.image}
           alt={pokemon.name}
-          className="h-96 w-96 object-contain"
+          className="w-32 h-32
+            sm:w-48 sm:h-48
+            md:w-55 md:h-55
+            lg:w-60 lg:h-60  
+            xl:w-80 xl:h-80  
+            object-contain"
         />
       </div>
       <div className="flex justify-center gap-3 mb-8">
@@ -54,7 +59,9 @@ export const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
         <div className="space-y-4">
           {Object.entries(pokemon.stats).map(([statName, value]) => (
             <div key={statName} className="flex item-center">
-              <div className="w-34 font-medium capitalize">{statName.replace(/([A-Z])/g, " $1")}</div>
+              <div className="w-34 font-medium capitalize">
+                {statName.replace(/([A-Z])/g, " $1")}
+              </div>
               <div className="flex-1">
                 <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
                   <div

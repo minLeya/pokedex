@@ -32,7 +32,7 @@ export const TypeFilter = ({ selectedTypes, onTypeToggle }: TypeFilterProps) => 
   ];
 
   return (
-    <div className="m-10 mt-4 border border-gray-300 rounded-lg overflow-hidden">
+    <div className="m-13 mt-4 border border-gray-300 rounded-lg overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-3 bg-gray-50 hover:bg-gray-100 flex items-center justify-between"

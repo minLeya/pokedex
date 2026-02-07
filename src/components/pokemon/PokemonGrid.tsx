@@ -2,7 +2,11 @@ import { useState } from "react";
 import { PokemonCard } from "./PokemonCard";
 import { usePokemon } from "../../hooks/usePokemon";
 
-export const PokemonGrid = () => {
+interface PokemonGridProps {
+  selectedTypes?: string[];
+}
+
+export const PokemonGrid = ({selectedTypes = []} : PokemonGridProps) => {
   const [page, setPage] = useState(1);
   const limit = 15;
 
@@ -38,10 +42,16 @@ export const PokemonGrid = () => {
     </div>;
   }
 
+  const filteredPokemons = selectedTypes.length > 0 ?
+    pokemons.filter(pokemon => 
+      pokemon.types.some(type => selectedTypes.includes(type))
+    )
+    : pokemons;
+
   return (
     <div className="min-h-screen">
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-14">
-        {pokemons.map((pokemon) => (
+        {filteredPokemons.map((pokemon) => (
           <PokemonCard key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>
